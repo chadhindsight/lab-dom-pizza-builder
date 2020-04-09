@@ -76,11 +76,47 @@ function renderGlutenFreeCrust() {
 }
 
 function renderButtons() {
-  // Iteration 3: add/remove the class "active" of each `<button class="btn">`
+
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.onclick = function (e) {
+
+      //btn btn-pepperoni 
+      if (e.target.className.includes('active')) {
+
+        e.target.className = e.target.className.replace('active', '')
+        //= btn btn-pepperoni
+      }
+      else {
+        e.target.className += ' active'
+        //= btn btn-pepperoni active
+      }
+    }
+  })
+
 }
 
 function renderPrice() {
-  // Iteration 4: change the HTML of `<aside class="panel price">`
+
+  let menu = ``
+  let total = basePrice;
+
+  for (let food in state) {
+    if (state[food]) {
+      total += ingredients[food].price
+      menu += `<li>$${ingredients[food].price} ${ingredients[food].name}</li>`
+    }
+  }
+
+  let newPricesHTML = `
+    <h2>Your pizza's price</h2>
+    <b>$10 cheese pizza</b>
+    <ul>
+    ${menu}
+    </ul>
+    <strong>$${total}</strong>
+  `
+  document.querySelector('.panel.price').innerHTML = newPricesHTML
+
 }
 
 renderEverything();
